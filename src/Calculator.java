@@ -28,6 +28,8 @@ public class Calculator {
         expression = expression.replace("÷", "/");
         expression = expression.replace("×", "*");
         expression = expression.replace("π", "pi");
+        expression = expression.replace("Ans", this.Ans);
+        expression = expression.replace("M", this.Mem);
         try{
             Runtime rt = Runtime.getRuntime();
             String pythonCode =

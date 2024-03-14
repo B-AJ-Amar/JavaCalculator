@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class CalculatorUI extends JFrame {
 
@@ -38,7 +39,7 @@ public class CalculatorUI extends JFrame {
         public String value; // can be not the same as text like 'pi' and π
         public boolean toBeCleared = false;
         private void initStyle() {
-            setFont(new Font("Arial", Font.PLAIN, 20));
+            setFont(new Font("Arial", Font.PLAIN, 15));
             setSize(50,50);
         }
         public CalcButton(String text) {
@@ -54,15 +55,45 @@ public class CalculatorUI extends JFrame {
             addActionListener(new ButtonEventListener());
         }
     }
+//        this class is button what will do double action like 'sin' and 'asin'
+//        class DoubleButton extends CalcButton {
+//            private HashMap<String,String> values = new HashMap<>();
+//
+//            public DoubleButton(String val1,String val2) {
+//                super(val1);
+//                values.put(val1, val1);
+//                values.put(val2, val2);
+//            }
+//            public DoubleButton(String text1, String value1,String text2, String value2) {
+//                super( text1, value1);
+//                values.put(text1, value1);
+//                values.put(text2, value2);
+//            }
+//
+//            class ButtonEventListener implements ActionListener {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    if (toBeCleared){
+//                        textArea.setText("");
+//                        toBeCleared = false;
+//                    }
+//                    DoubleButton button = (DoubleButton) e.getSource();
+//                    textArea.setText(textArea.getText()+button.values.get(button.value));
+//                }
+//            }
+//
+//        }
 
     private JPanel panel1 = new JPanel(new BorderLayout());
     private JTextArea textArea = new JTextArea();
 
 
-    private JPanel panel2 = new JPanel(new GridLayout(8,4));
+    private JPanel panel2 = new JPanel(new GridLayout(8,5));
 //
+
+    private JLabel spacer1 = new JLabel("");
+    private JLabel spacer2 = new JLabel("");
     private CalcButton b_alt = new CalcButton("Alt");
-    private CalcButton b_shift = new CalcButton("Shift");
     private CalcButton b_left = new CalcButton("←");
     private CalcButton b_right = new CalcButton("→");
 //
@@ -79,7 +110,7 @@ public class CalculatorUI extends JFrame {
     private CalcButton b_dot = new CalcButton(".");
     private CalcButton b_plus = new CalcButton("+");
     private CalcButton b_minus = new CalcButton("-");
-    private CalcButton b_multiply = new CalcButton("*");
+    private CalcButton b_multiply = new CalcButton("×","*");
     private CalcButton b_divide = new CalcButton("/");
     private CalcButton b_power = new CalcButton("^");
     private CalcButton b_equals = new CalcButton("=");
@@ -89,11 +120,19 @@ public class CalculatorUI extends JFrame {
     private CalcButton b_rb = new CalcButton(")");
     private CalcButton b_pi = new CalcButton("π");
     private CalcButton b_e = new CalcButton("e");
+    private CalcButton b_exp = new CalcButton("e^x");
     private CalcButton b_del = new CalcButton("Del");
 
+    private CalcButton b_mod = new CalcButton("mod", "%");
+    private CalcButton b_log = new CalcButton("log", "log(");
+    private CalcButton b_ln = new CalcButton("ln", "ln(");
     private CalcButton b_cos = new CalcButton("cos", "cos(");
     private CalcButton b_sin = new CalcButton("sin", "sin(");
     private CalcButton b_tan = new CalcButton("tan", "tan(");
+
+    private CalcButton b_cosh = new CalcButton("cosh", "cosh(");
+    private CalcButton b_sinh = new CalcButton("sinh", "sinh(");
+    private CalcButton b_tanh = new CalcButton("tanh", "tanh(");
     private CalcButton b_sqrt = new CalcButton("√", "√(");
 
 
@@ -105,7 +144,7 @@ public class CalculatorUI extends JFrame {
 
         setTitle("Calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300,500);
+        setSize(350,500);
         setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
@@ -116,47 +155,55 @@ public class CalculatorUI extends JFrame {
         add(textArea, BorderLayout.NORTH);
         add(panel2, BorderLayout.CENTER);
 
-//        add(panel1, BorderLayout.NORTH);
+//        ===============================
 
         panel2.add(b_alt);
+        panel2.add(spacer1);
         panel2.add(b_left);
         panel2.add(b_right);
-        panel2.add(b_shift);
+        panel2.add(spacer2);
 
-        panel2.add(b_1);
-        panel2.add(b_2);
-        panel2.add(b_3);
-        panel2.add(b_plus);
-
-        panel2.add(b_4);
-        panel2.add(b_5);
-        panel2.add(b_6);
-        panel2.add(b_minus);
-
-        panel2.add(b_7);
-        panel2.add(b_8);
-        panel2.add(b_9);
-        panel2.add(b_multiply);
-
-        panel2.add(b_0);
-        panel2.add(b_dot);
-        panel2.add(b_equals);
-        panel2.add(b_divide);
-//       base
-        panel2.add(b_lb);
-        panel2.add(b_rb);
-        panel2.add(b_ans);
-        panel2.add(b_power);
-//
+        panel2.add(b_cosh);
+        panel2.add(b_sinh);
+        panel2.add(b_tanh);
         panel2.add(b_clear);
         panel2.add(b_del);
-        panel2.add(b_e);
-        panel2.add(b_sqrt);
 
         panel2.add(b_cos);
         panel2.add(b_sin);
         panel2.add(b_tan);
         panel2.add(b_pi);
+        panel2.add(b_e);
+
+        panel2.add(b_power);
+        panel2.add(b_lb);
+        panel2.add(b_rb);
+        panel2.add(b_mod);
+        panel2.add(b_divide);
+
+        panel2.add(b_exp);
+        panel2.add(b_7);
+        panel2.add(b_8);
+        panel2.add(b_9);
+        panel2.add(b_multiply);
+
+        panel2.add(b_sqrt);
+        panel2.add(b_6);
+        panel2.add(b_5);
+        panel2.add(b_4);
+        panel2.add(b_minus);
+
+        panel2.add(b_log);
+        panel2.add(b_1);
+        panel2.add(b_2);
+        panel2.add(b_3);
+        panel2.add(b_plus);
+
+        panel2.add(b_ln);
+        panel2.add(b_dot);
+        panel2.add(b_0);
+        panel2.add(b_ans);
+        panel2.add(b_equals);
 
     }
 

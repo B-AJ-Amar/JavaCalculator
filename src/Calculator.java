@@ -31,6 +31,7 @@ public class Calculator {
         expression = expression.replace("π", "pi");
         expression = expression.replace("√(", "√");
         expression = expression.replace("√", "sqrt(");
+        expression = expression.replace("log(", "log10(");
         expression = expression.replace("Ans", this.Ans);
         expression = expression.replace("M", this.Mem);
         return expression;
@@ -50,7 +51,7 @@ public class Calculator {
                             "'atan2': atan2, 'ceil': ceil, 'cos': cos, 'cosh': cosh, " +
                             "'degrees': degrees, 'exp': exp, 'fabs': fabs, 'floor': floor, " +
                             "'fmod': fmod, 'frexp': frexp, 'hypot': hypot, 'ldexp': ldexp, " +
-                            "'log': log, 'log10': log10, 'modf': modf, 'pow': pow, " +
+                            "'ln': log, 'log10': log10, 'modf': modf, 'pow': pow, " +
                             "'radians': radians, 'sin': sin, 'sinh': sinh, 'tan': tan, " +
                             "'tanh': tanh, 'pi': pi, 'e': e};"
 

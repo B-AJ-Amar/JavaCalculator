@@ -24,6 +24,7 @@ public class Calculator {
 
     public String calculate(String exp) {
         String line = null;
+        if (exp.isEmpty()) return "0";
         String expression = exp.replace("^", "**");
         expression = expression.replace("÷", "/");
         expression = expression.replace("×", "*");
@@ -47,7 +48,6 @@ public class Calculator {
 
                             + "result = eval('"+expression+"', math_functions);"
                             + "print(result)";
-            System.out.println(pythonCode);
             // Construct the Python command
             String pythonCommand = "python -c \"" + pythonCode + "\"";
 

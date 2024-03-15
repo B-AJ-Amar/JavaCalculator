@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class CalculatorUI extends JFrame {
 
@@ -13,31 +12,39 @@ public class CalculatorUI extends JFrame {
         class ButtonEventListener implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
+                boolean cleared = false;
                 if (toBeCleared){
                     textArea.setText("");
                     toBeCleared = false;
                 }
+
                 CalcButton button = (CalcButton) e.getSource();
-                if (button.value.equals("=")){
+                if (button.value.equals("=") ){
                     String resault = calc.calculate(textArea.getText());
                     textArea.setText(resault);
                     toBeCleared = true;
+
                 }
                 else if (button.value.equals("C")){
                     textArea.setText("");
                 }
-                else if (button.value.equals("Del") && textArea.getText().length() > 0){
+                else if (button.value.equals("Del")){
+                    if (!textArea.getText().isEmpty())
                     textArea.setText(textArea.getText().substring(0, textArea.getText().length()-1));
+                }
+                else if (button.value.equals("←")){
+                   
                 }
                 else{
                     textArea.setText(textArea.getText()+button.value);
+
                 }
             }
 
         }
 
         public String value; // can be not the same as text like 'pi' and π
-        public boolean toBeCleared = false;
+
         private void initStyle() {
             setFont(new Font("Arial", Font.PLAIN, 15));
             setSize(50,50);
@@ -55,37 +62,47 @@ public class CalculatorUI extends JFrame {
             addActionListener(new ButtonEventListener());
         }
     }
-//        this class is button what will do double action like 'sin' and 'asin'
-//        class DoubleButton extends CalcButton {
-//            private HashMap<String,String> values = new HashMap<>();
-//
-//            public DoubleButton(String val1,String val2) {
-//                super(val1);
-//                values.put(val1, val1);
-//                values.put(val2, val2);
-//            }
-//            public DoubleButton(String text1, String value1,String text2, String value2) {
-//                super( text1, value1);
-//                values.put(text1, value1);
-//                values.put(text2, value2);
-//            }
-//
-//            class ButtonEventListener implements ActionListener {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    if (toBeCleared){
-//                        textArea.setText("");
-//                        toBeCleared = false;
-//                    }
-//                    DoubleButton button = (DoubleButton) e.getSource();
-//                    textArea.setText(textArea.getText()+button.values.get(button.value));
-//                }
-//            }
-//
-//        }
+//    TODO: add theme button
+    class ThemeButton extends JButton {
+        private int currentTheme = 0;
+        class ButtonEventListener implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
-    private JPanel panel1 = new JPanel(new BorderLayout());
+
+                ThemeButton button = (ThemeButton) e.getSource();
+
+            }
+
+        }
+
+        public String value; // can be not the same as text like 'pi' and π
+
+        private void initStyle() {
+            setFont(new Font("Arial", Font.PLAIN, 15));
+            setSize(50,50);
+        }
+        public ThemeButton(String text) {
+            super(text);
+            initStyle();
+            value = text;
+            addActionListener(new ButtonEventListener());
+        }
+        public ThemeButton(String text, String value) {
+            super(text);
+            initStyle();
+            this.value = value;
+            addActionListener(new ButtonEventListener());
+        }
+    }
+
+    private  JPanel panel0 = new JPanel(new BorderLayout());
+    private JButton button = new JButton();
+    ImageIcon sunIcon = new ImageIcon("../img/sun.png");
+    ImageIcon moonIcon = new ImageIcon("../img/moon.png");
+    private  JPanel panel1 = new JPanel(new BorderLayout());
     private JTextArea textArea = new JTextArea();
+    public boolean toBeCleared = false; // for textArea
 
 
     private JPanel panel2 = new JPanel(new GridLayout(8,5));
@@ -151,9 +168,9 @@ public class CalculatorUI extends JFrame {
 
         textArea.setFont(new Font("Arial", Font.PLAIN, 36));
         setLayout(new BorderLayout());
-
-        add(textArea, BorderLayout.NORTH);
-        add(panel2, BorderLayout.CENTER);
+        add(panel1, BorderLayout.CENTER);
+        panel1.add(textArea, BorderLayout.NORTH);
+        panel1.add(panel2, BorderLayout.CENTER);
 
 //        ===============================
 

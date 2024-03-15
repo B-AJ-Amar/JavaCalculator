@@ -1,8 +1,10 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class Calculator {
+
+//    private final String logsFile = "src/logs.csv";
     private String Ans;
     private String Mem;
     public Calculator(){
@@ -22,9 +24,7 @@ public class Calculator {
         return Ans;
     }
 
-    public String calculate(String exp) {
-        String line = null;
-        if (exp.isEmpty()) return "0";
+    private String validate(String exp){
         String expression = exp.replace("^", "**");
         expression = expression.replace("÷", "/");
         expression = expression.replace("×", "*");
@@ -33,6 +33,14 @@ public class Calculator {
         expression = expression.replace("√", "sqrt(");
         expression = expression.replace("Ans", this.Ans);
         expression = expression.replace("M", this.Mem);
+        return expression;
+    }
+
+    public String calculate(String exp) {
+        String line = null;
+        if (exp.isEmpty()) return "0";
+        String expression = validate(exp);
+
         try{
             Runtime rt = Runtime.getRuntime();
             String pythonCode =
@@ -56,6 +64,7 @@ public class Calculator {
 
             BufferedReader inputReader = new BufferedReader(new InputStreamReader(pr.getInputStream()));
             line = inputReader.readLine();
+            saveLog(exp, line);
             System.out.println("Output: " + line);
 
             inputReader.close();
@@ -68,5 +77,49 @@ public class Calculator {
             return line;
         }
         return "ERROR";
+    }
+
+    private void saveLog(String exp, String result) {
+        try {
+            FileWriter fileWriter = new FileWriter("src/logs.csv", true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(exp + ";" + result+";" + new Date().toString());
+            bufferedWriter.newLine();
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ArrayList<Logs> getLogs (){
+        ArrayList<Logs> logs = new ArrayList<>();
+        try {
+            FileReader fileReader = new FileReader("src/logs.csv");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] data = line.split(";");
+                logs.add(new Logs(data[0], data[1], data[2]));
+            }
+            bufferedReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return logs;
+
+    }
+
+
+
+}
+
+class Logs{
+    public String expression;
+    public String result;
+    public String date;
+    public Logs(String expression, String result, String date){
+        this.expression = expression;
+        this.result = result;
+        this.date = date;
     }
 }

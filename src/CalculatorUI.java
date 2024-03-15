@@ -1,5 +1,3 @@
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
@@ -8,7 +6,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.Enumeration;
 
 public class CalculatorUI extends JFrame {
 
@@ -99,7 +96,6 @@ public class CalculatorUI extends JFrame {
             addActionListener(new ButtonEventListener());
         }
     }
-//    TODO: add theme button
     class OptionButton extends JButton{
         ImageIcon[] icons = new ImageIcon[2];
         public void updateTheme() {
@@ -253,7 +249,7 @@ public class CalculatorUI extends JFrame {
     private CalcButton b_rb = new CalcButton(")");
     private CalcButton b_pi = new CalcButton("π");
     private CalcButton b_e = new CalcButton("e");
-    private CalcButton b_exp = new CalcButton("e^x");
+    private CalcButton b_exp = new CalcButton("e^x","e^");
     private DeleteButton b_del = new DeleteButton();
 
     private CalcButton b_mod = new CalcButton("mod", "%");
